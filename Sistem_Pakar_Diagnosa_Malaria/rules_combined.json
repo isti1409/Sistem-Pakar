@@ -1,0 +1,233 @@
+{
+  "symptoms": [
+    {
+      "code": "G01",
+      "name": "Tinggal di daerah endemik",
+      "mb": 0.8,
+      "md": 0.2
+    },
+    {
+      "code": "G02",
+      "name": "Menggigil hebat saat suhu naik",
+      "mb": 1.0,
+      "md": 0.1
+    },
+    {
+      "code": "G03",
+      "name": "Sakit kepala berat",
+      "mb": 0.8,
+      "md": 0.1
+    },
+    {
+      "code": "G04",
+      "name": "Lemas setelah atau selama demam",
+      "mb": 0.6,
+      "md": 0.1
+    },
+    {
+      "code": "G05",
+      "name": "Nyeri otot dan sendi",
+      "mb": 0.6,
+      "md": 0.1
+    },
+    {
+      "code": "G06",
+      "name": "Berkeringat berlebihan setelah demam",
+      "mb": 0.8,
+      "md": 0.1
+    },
+    {
+      "code": "G07",
+      "name": "Pucat (anemia)",
+      "mb": 0.6,
+      "md": 0.2
+    },
+    {
+      "code": "G08",
+      "name": "Demam siklus 48 jam",
+      "mb": 1.0,
+      "md": 0.0
+    },
+    {
+      "code": "G09",
+      "name": "Gangguan konsentrasi / bingung",
+      "mb": 0.6,
+      "md": 0.1
+    },
+    {
+      "code": "G10",
+      "name": "Demam tidak teratur",
+      "mb": 1.0,
+      "md": 0.1
+    },
+    {
+      "code": "G11",
+      "name": "Migrain / sakit kepala berat",
+      "mb": 1.0,
+      "md": 0.2
+    },
+    {
+      "code": "G12",
+      "name": "Mual dan muntah",
+      "mb": 0.8,
+      "md": 0.1
+    },
+    {
+      "code": "G13",
+      "name": "Penurunan berat badan / nafsu makan",
+      "mb": 0.8,
+      "md": 0.2
+    },
+    {
+      "code": "G14",
+      "name": "Gangguan tidur",
+      "mb": 0.6,
+      "md": 0.2
+    },
+    {
+      "code": "G15",
+      "name": "Sesak napas / pernapasan cepat",
+      "mb": 0.6,
+      "md": 0.2
+    },
+    {
+      "code": "G16",
+      "name": "Bintik merah di kulit",
+      "mb": 0.8,
+      "md": 0.2
+    },
+    {
+      "code": "G17",
+      "name": "Nyeri perut",
+      "mb": 0.7,
+      "md": 0.1
+    },
+    {
+      "code": "G18",
+      "name": "Menggigil di malam hari",
+      "mb": 0.9,
+      "md": 0.1
+    },
+    {
+      "code": "G19",
+      "name": "Keringat malam berlebihan",
+      "mb": 0.8,
+      "md": 0.1
+    },
+    {
+      "code": "G20",
+      "name": "Gatal atau ruam di kulit",
+      "mb": 0.6,
+      "md": 0.2
+    }
+  ],
+  "rules": [
+    {
+      "id": "R_MTE_full",
+      "if": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06",
+        "G07",
+        "G08",
+        "G17",
+        "G18",
+        "G19"
+      ],
+      "then": "Malaria Tertiana",
+      "cf": 1.0,
+      "note": "Aturan komprehensif Malaria Tertiana berdasarkan kombinasi gejala dari IJISAE (2024) dan IJARSS (2025)."
+    },
+    {
+      "id": "R_MTO_full",
+      "if": [
+        "G01",
+        "G02",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "G14",
+        "G15",
+        "G16",
+        "G20"
+      ],
+      "then": "Malaria Tropika",
+      "cf": 1.0,
+      "note": "Aturan komprehensif Malaria Tropika dari kedua sumber."
+    },
+    {
+      "id": "R_MTE_core",
+      "if": [
+        "G02",
+        "G03",
+        "G08",
+        "G18"
+      ],
+      "then": "Malaria Tertiana",
+      "cf": 0.95,
+      "note": "Aturan paralel (core) untuk Tertiana; gejala khas termasuk demam siklus 48 jam."
+    },
+    {
+      "id": "R_MTE_support",
+      "if": [
+        "G04",
+        "G05",
+        "G06",
+        "G07",
+        "G19"
+      ],
+      "then": "Malaria Tertiana",
+      "cf": 0.9,
+      "note": "Aturan paralel (support) untuk Tertiana; gejala tambahan seperti keringat malam dan lemas."
+    },
+    {
+      "id": "R_MTO_core",
+      "if": [
+        "G10",
+        "G02",
+        "G11",
+        "G12"
+      ],
+      "then": "Malaria Tropika",
+      "cf": 0.94,
+      "note": "Aturan paralel (core) untuk Tropika; gejala utama demam tidak teratur, migrain, mual."
+    },
+    {
+      "id": "R_MTO_support",
+      "if": [
+        "G13",
+        "G14",
+        "G15",
+        "G16",
+        "G20"
+      ],
+      "then": "Malaria Tropika",
+      "cf": 0.88,
+      "note": "Aturan paralel (support) untuk Tropika; gejala tambahan seperti ruam, sesak napas, gangguan tidur."
+    },
+    {
+      "id": "R_seq_MTE_anemia",
+      "if": [
+        "Malaria Tertiana",
+        "G07"
+      ],
+      "then": "Anemia akibat malaria",
+      "cf": 0.7,
+      "note": "Aturan sekuensial: pasien tertiana dengan anemia berisiko komplikasi anemia akibat malaria."
+    },
+    {
+      "id": "R_seq_MTO_resp",
+      "if": [
+        "Malaria Tropika",
+        "G15"
+      ],
+      "then": "Komplikasi pernapasan akibat malaria",
+      "cf": 0.65,
+      "note": "Aturan sekuensial: pasien tropika dengan sesak napas berisiko komplikasi pernapasan."
+    }
+  ]
+}
