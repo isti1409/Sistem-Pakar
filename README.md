@@ -3,5 +3,4 @@ Proyek sistem pakar yang digunakan untuk mendiagnosis Malaria. Basis pengetahuan
 # Anggota Kelompok
 Faris Fathan Asradinto (2300761)
 
-
 Istikomah              (2312276)
